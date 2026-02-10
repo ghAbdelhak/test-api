@@ -7,6 +7,12 @@ stages {
                 checkout scm
             }
         }
+    stage('Workspace') {
+        steps {
+            echo "Workspace is: ${env.WORKSPACE}"
+            bat 'dir'
+        }
+    }
     stage('Init') {
         steps {
             bat 'mvn clean'
