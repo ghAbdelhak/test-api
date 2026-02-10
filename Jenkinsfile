@@ -44,13 +44,17 @@ post {
 
     always {
         publishHTML([
+            allowMissing: false,
             reportDir: 'target/site/jacoco',
             reportFiles: 'index.html',
             reportName: 'JaCoCo Coverage Report',
             keepAll: true,
             alwaysLinkToLastBuild: true
         ])
+
     }
 
 }
+
+
 }
