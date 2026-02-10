@@ -30,7 +30,7 @@ stages {
 stage('Deploy') {
     steps {
         withCredentials([usernamePassword(
-            credentialsId: 'mymavenrepo',
+            credentialsId: 'myMavenRepo',
             usernameVariable: 'myMavenRepo',
             passwordVariable: '1234'
         )]) {
