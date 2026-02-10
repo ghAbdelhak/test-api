@@ -17,6 +17,8 @@ stages {
         steps {
             bat 'mvn test'
             junit '**/target/surefire-reports/*.xml'
+            cucumber reportTitle: 'Myreport',
+                    fileIncludePattern: 'target/example-report.json'
         }
     }
     stage('Build') {
@@ -39,9 +41,16 @@ stage('Deploy') {
 
 }
 post {
+
     always {
-        cucumber reportTitle: 'Myreport',
-                fileIncludePattern: 'target/example-report.json'
+        publishHTML([
+            reportDir: 'target/site/jacoco',
+            reportFiles: 'index.html',
+            reportName: 'JaCoCo Coverage Report',
+            keepAll: true,
+            alwaysLinkToLastBuild: true
+        ])
     }
+
 }
 }
