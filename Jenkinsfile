@@ -32,7 +32,7 @@ stage('Deploy') {
             bat 'mvn  deploy'
         }
     }
-}
+
 
 
 
