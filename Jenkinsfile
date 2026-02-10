@@ -40,11 +40,8 @@ stage('Deploy') {
 }
 post {
     always {
-        cucumber
-                reportTitle: 'Myreport',
-                fileIncludePattern: 'target/cucumber-report.json',
-                sortingMethod: 'ALPHABETICAL',
-                trendsLimit: 100
+        cucumber reportTitle: 'Myreport',
+                fileIncludePattern: 'target/cucumber-report.json'
     }
 }
 }
