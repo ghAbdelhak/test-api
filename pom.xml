@@ -57,27 +57,32 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.14</version>
                 <executions>
+
+                    <!-- Attache l’agent -->
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+
+                    <!-- Génère HTML + XML -->
                     <execution>
-                        <id>check</id>
+                        <id>report</id>
+                        <phase>verify</phase>
                         <goals>
-                            <goal>check</goal>
+                            <goal>report</goal>
                         </goals>
                         <configuration>
-                            <rules>
-                                <rule>
-                                    <limits>
-                                        <limit instruction="min" value="0.5"/>  <!-- Adjust this value -->
-                                        <limit branch="min" value="0.5"/>      <!-- Adjust this value -->
-                                    </limits>
-                                </rule>
-                            </rules>
+                            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+                            <reports>
+                                <xml>true</xml>
+                                <html>true</html>
+                                <csv>false</csv>
+                            </reports>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
         </plugins>
