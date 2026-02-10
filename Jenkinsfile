@@ -36,7 +36,7 @@ stages {
     stage('Documentation') {
         steps {
             script {
-                bat './mvnw javadoc:javadoc'
+                bat 'mvn javadoc:javadoc'
 
                 // Clean up previous 'doc' folder if it exists
                 bat 'if exist doc rmdir /S /Q doc'
