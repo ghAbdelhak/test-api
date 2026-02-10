@@ -41,7 +41,7 @@ stage('Deploy') {
 post {
     always {
         cucumber reportTitle: 'Myreport',
-                fileIncludePattern: 'target/cucumber-report.json'
+                fileIncludePattern: 'target/example-report.json'
     }
 }
 }
