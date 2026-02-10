@@ -29,17 +29,7 @@ stages {
 
 stage('Deploy') {
     steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'myMavenRepo',
-            usernameVariable: 'myMavenRepo',
-            passwordVariable: '1234'
-        )]) {
-            bat """
-            mvn deploy ^
-            -DskipTests ^
-            -Dmaven.repo.username=%MVN_USER% ^
-            -Dmaven.repo.password=%MVN_PASS%
-            """
+            bat 'mvn  deploy'
         }
     }
 }
