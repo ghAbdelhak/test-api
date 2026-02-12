@@ -90,7 +90,7 @@ stages {
             }
             steps {
                 bat '''
-                echo Running deployment for tag %TAG_NAME%
+                echo Running deployment for tag %VERSION%
                 REM put your deploy commands here
                 '''
             }
