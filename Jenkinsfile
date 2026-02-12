@@ -75,7 +75,7 @@ stages {
                 bat '''
                 curl -X POST \
                 -H 'Content-type: application/json'
-                 --data '{"text":"Deploying"}'  \ "$SLACK_WEBHOOK"
+                 --data '{"text":"Deploying"}' "$SLACK_WEBHOOK"
                  '''
             }
         }
