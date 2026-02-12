@@ -79,27 +79,42 @@ stages {
 //       }
 
 
+//    stage("tag") {
+//           steps {
+//               bat '''
+//                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases \
+//                         -H "Authorization: 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" \
+//                     -H "Accept: application/vnd.github+json" \
+//                     -H "Content-Type: application/json" \
+//                     -d '{
+//                       "tag_name": "v2.0",
+//                       "name": "Release v2.0",
+//                       "body": "Production release",
+//                       "draft": false,
+//                       "prerelease": false
+//                     }'
+//
+//               '''
+//           }
+//       }
 
 
-
-    stage("tag") {
+       stage("Create GitHub Release") {
+           environment {
+               GITHUB_TOKEN = credentials('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') // use Jenkins credentials
+           }
            steps {
                bat '''
-                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases \
-                         -H "Authorization: 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" \
-                     -H "Accept: application/vnd.github+json" \
-                     -H "Content-Type: application/json" \
-                     -d '{
-                       "tag_name": "v2.0",
-                       "name": "Release v2.0",
-                       "body": "Production release",
-                       "draft": false,
-                       "prerelease": false
-                     }'
-
+               curl -X POST ^
+                 -H "Authorization: Bearer %GITHUB_TOKEN%" ^
+                 -H "Accept: application/vnd.github+json" ^
+                 -H "Content-Type: application/json" ^
+                 https://api.github.com/repos/ghAbdelhak/test-api/releases ^
+                 -d "{\"tag_name\":\"v2.0\",\"name\":\"Release v2.0\",\"body\":\"Production release\",\"draft\":false,\"prerelease\":false}"
                '''
            }
        }
+
 
 }
 
