@@ -110,7 +110,7 @@ stages {
                  -H "Accept: application/vnd.github+json" ^
                  -H "Content-Type: application/json" ^
                  https://api.github.com/repos/ghAbdelhak/test-api/releases ^
-                 -d "{\"tag_name\":\"v2.0\",\"name\":\"Release v2.0\",\"body\":\"Production release\",\"draft\":false,\"prerelease\":false}"
+                 -d "{\"tag_name\":\"v1.0\",\"name\":\"Release v1.0\",\"body\":\"Production release\",\"draft\":false,\"prerelease\":false}"
                '''
            }
        }
