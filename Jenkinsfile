@@ -63,11 +63,23 @@ stages {
         }
     }
 
-stage('Deploy') {
-    steps {
-            bat 'mvn  deploy'
+        stage('Deploy') {
+            steps {
+                    bat 'mvn  deploy'
+                }
         }
-    }
+
+
+        stage('Slack') {
+            steps {
+                bat '''
+                curl -X POST \
+                -H 'Content-type: application/json'
+                 --data '{"text":"Deploying"}'  \ "$SLACK_WEBHOOK"
+                 '''
+            }
+        }
+
 
 
 
