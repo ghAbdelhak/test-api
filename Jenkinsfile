@@ -108,7 +108,7 @@ stages {
            steps {
                bat """
                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases ^
-                  -H "Authorization: Bearer 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" ^
+                  -H "Authorization: Bearer GITHUB_TOKEN" ^
                   -H "Accept: application/vnd.github+json" ^
                   -H "Content-Type: application/json" ^
                   -d "{\\"tag_name\\":\\"v%VERSION%\\",\\"name\\":\\"Release v%VERSION%\\",\\"body\\":\\"Production release\\",\\"draft\\":false,\\"prerelease\\":false}"
