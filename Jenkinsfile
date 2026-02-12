@@ -100,6 +100,7 @@ stages {
 
 
 
+
        stage("Create GitHub Release") {
            environment {
                GITHUB_TOKEN = credentials('GITHUB_TOKEN') // use Jenkins credentials
