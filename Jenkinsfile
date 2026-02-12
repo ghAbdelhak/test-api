@@ -81,8 +81,18 @@ stages {
     stage("tag") {
            steps {
                bat '''
-                   git tag -a ${VERSION} -m "Release ${VERSION}
-                   git push orgin ${VERSION}
+                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases \
+                         -H "Authorization: Bearer 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" \
+                     -H "Accept: application/vnd.github+json" \
+                     -H "Content-Type: application/json" \
+                     -d '{
+                       "tag_name": "v1.0",
+                       "name": "Release v1.0",
+                       "body": "Production release",
+                       "draft": false,
+                       "prerelease": false
+                     }'
+
                '''
            }
        }
