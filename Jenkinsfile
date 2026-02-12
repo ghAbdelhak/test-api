@@ -81,7 +81,7 @@ stages {
     stage("tag") {
            steps {
                bat '''
-                   git tage -a ${VERSION} -m "Release ${VERSION}
+                   git tag -a ${VERSION} -m "Release ${VERSION}
                    git push orgin ${VERSION}
                '''
            }
