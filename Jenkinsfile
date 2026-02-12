@@ -73,7 +73,7 @@ stages {
     stage('Slack') {
         steps {
             bat '''
-            curl -X POST -H "Content-type: application/json" --data "{\"text\":\"Deploying\"}" "%SLACK_WEBHOOK%"
+            curl -X POST -H "Content-type: application/json" --data "{"text":"Deploying"}" "%SLACK_WEBHOOK%"
             '''
         }
     }
