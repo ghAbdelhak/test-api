@@ -82,24 +82,42 @@ stages {
 
 
 
-    stage("tag") {
-           steps {
-               bat '''
-                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases \
-                         -H "Authorization: Bearer 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" \
-                     -H "Accept: application/vnd.github+json" \
-                     -H "Content-Type: application/json" \
-                     -d '{
-                       "tag_name": "v1.1",
-                       "name": "Release v1.1",
-                       "body": "Production release",
-                       "draft": false,
-                       "prerelease": false
-                     }'
+//    stage("tag") {
+//           steps {
+//               bat '''
+//                   curl -X POST https://api.github.com/repos/ghAbdelhak/test-api/releases \
+//                         -H "Authorization: Bearer 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" \
+//                     -H "Accept: application/vnd.github+json" \
+//                     -H "Content-Type: application/json" \
+//                     -d '{
+//                       "tag_name": "v1.1",
+//                       "name": "Release v1.1",
+//                       "body": "Production release",
+//                       "draft": false,
+//                       "prerelease": false
+//                     }'
+//
+//               '''
+//           }
+//       }
 
-               '''
-           }
-       }
+
+    stage("tag") {
+        environment {
+            GITHUB_TOKEN = credentials('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')
+        }
+        steps {
+            bat '''
+            curl -X POST ^
+              -H "Authorization: Bearer %GITHUB_TOKEN%" ^
+              -H "Accept: application/vnd.github+json" ^
+              -H "Content-Type: application/json" ^
+              https://api.github.com/repos/ghAbdelhak/test-api/releases ^
+              -d "{\"tag_name\":\"v1.1\",\"name\":\"Release v1.1\",\"body\":\"Production release\",\"draft\":false,\"prerelease\":false}"
+            '''
+        }
+    }
+
 
 
 
