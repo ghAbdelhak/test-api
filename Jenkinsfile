@@ -70,13 +70,31 @@ stages {
 //        }
 
 
-    stage("slack") {
-           steps {
-               bat '''
-                   curl -X POST -H "Content-type: application/json" --data "{""text"":""testing slack""}" "%SLACK_WEBHOOK%"
-               '''
-           }
-       }
+//    stage("slack") {
+//           steps {
+//               bat '''
+//                   curl -X POST -H "Content-type: application/json" --data "{""text"":""testing slack""}" "%SLACK_WEBHOOK%"
+//               '''
+//           }
+//       }
+
+        stage('Verify Tag') {
+            steps {
+                bat 'echo Deploying tag %VERSION%'
+            }
+        }
+
+        stage('Deploying TAG') {
+            when {
+                buildingTag()
+            }
+            steps {
+                bat '''
+                echo Running deployment for tag %TAG_NAME%
+                REM put your deploy commands here
+                '''
+            }
+        }
 
 
 
