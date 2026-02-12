@@ -78,65 +78,16 @@ stages {
 //           }
 //       }
 
-        stage('Verify Tag') {
-            steps {
-                bat '''
-                echo ===============================
-                echo JOB_NAME=%JOB_NAME%
-                echo BUILD_NUMBER=%BUILD_NUMBER%
-                echo TAG_NAME=%VERSION%
-                echo ===============================
-                '''
-            }
-        }
+    stage("tag") {
+           steps {
+               bat '''
+                   git tage -a ${VERSION} -m "Release ${VERSION}
+                   git push orgin ${VERSION}
+               '''
+           }
+       }
 
-        stage('Fail if Not a Tag') {
-            when {
-                not { buildingTag() }
-            }
-            steps {
-                bat '''
-                echo ERROR: This pipeline runs ONLY for Git tags
-                exit /b 1
-                '''
-            }
-        }
 
-        stage('Checkout Tag') {
-            when {
-                buildingTag()
-            }
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            when {
-                buildingTag()
-            }
-            steps {
-                bat '''
-                echo Building application for tag %VERSION%
-                REM ---- PUT YOUR BUILD COMMANDS HERE ----
-                REM mvn clean package
-                REM npm install && npm run build
-                '''
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                buildingTag()
-            }
-            steps {
-                bat '''
-                echo Deploying version %VERSION%
-                REM ---- PUT YOUR DEPLOY COMMANDS HERE ----
-                REM xcopy /E /Y dist\\* C:\\deploy\\app\\
-                '''
-            }
-        }
 
 
 
