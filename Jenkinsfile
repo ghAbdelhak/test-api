@@ -2,31 +2,31 @@ pipeline {
 agent any
 // password vgdo tbxb yiyf smar
 stages {
-    stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-    stage('Workspace') {
-        steps {
-            echo "Workspace is: ${env.WORKSPACE}"
-            bat 'dir'
-        }
-    }
-    stage('Init') {
-        steps {
-            bat 'mvn clean'
-        }
-    }
-
-    stage('Test') {
-        steps {
-            bat 'mvn test'
-            junit '**/target/surefire-reports/*.xml'
-            cucumber reportTitle: 'Myreport',
-                    fileIncludePattern: 'target/example-report.json'
-        }
-    }
+//    stage('Checkout') {
+//            steps {
+//                checkout scm
+//            }
+//        }
+//    stage('Workspace') {
+//        steps {
+//            echo "Workspace is: ${env.WORKSPACE}"
+//            bat 'dir'
+//        }
+//    }
+//    stage('Init') {
+//        steps {
+//            bat 'mvn clean'
+//        }
+//    }
+//
+//    stage('Test') {
+//        steps {
+//            bat 'mvn test'
+//            junit '**/target/surefire-reports/*.xml'
+//            cucumber reportTitle: 'Myreport',
+//                    fileIncludePattern: 'target/example-report.json'
+//        }
+//    }
 //    stage('Build') {
 //        steps {
 //            bat 'mvn install'
@@ -80,18 +80,60 @@ stages {
 
         stage('Verify Tag') {
             steps {
-                bat 'echo Deploying tag %VERSION%'
+                bat '''
+                echo ===============================
+                echo JOB_NAME=%JOB_NAME%
+                echo BUILD_NUMBER=%BUILD_NUMBER%
+                echo TAG_NAME=%VERSION%
+                echo ===============================
+                '''
             }
         }
 
-        stage('Deploying TAG') {
+        stage('Fail if Not a Tag') {
+            when {
+                not { buildingTag() }
+            }
+            steps {
+                bat '''
+                echo ERROR: This pipeline runs ONLY for Git tags
+                exit /b 1
+                '''
+            }
+        }
+
+        stage('Checkout Tag') {
+            when {
+                buildingTag()
+            }
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
             when {
                 buildingTag()
             }
             steps {
                 bat '''
-                echo Running deployment for tag %VERSION%
-                REM put your deploy commands here
+                echo Building application for tag %VERSION%
+                REM ---- PUT YOUR BUILD COMMANDS HERE ----
+                REM mvn clean package
+                REM npm install && npm run build
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                buildingTag()
+            }
+            steps {
+                bat '''
+                echo Deploying version %VERSION%
+                REM ---- PUT YOUR DEPLOY COMMANDS HERE ----
+                REM xcopy /E /Y dist\\* C:\\deploy\\app\\
                 '''
             }
         }
